@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const wechatMiniApp = require('./wechatMiniApp');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send({status: 'running'});
-});
+router.use('/wechat-mini-app', wechatMiniApp);
+
+
 
 module.exports = router;
