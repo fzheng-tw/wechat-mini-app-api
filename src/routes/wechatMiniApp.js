@@ -1,26 +1,13 @@
 import  express from 'express';
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
+
 
 import {appId, appSecret} from '../config';
 import {User} from '../models/user'
-
+import {generateTokenByOpenId, verifyToken} from '../util/authenticate';
 
 
 const router = express.Router();
-
-const generateTokenByOpenId = (openId) => {
-  return jwt.sign({openId: openId}, 'secret', { expiresIn: '30 days'});
-}
-
-const verifyToken = (token) => {
-  try {
-    const decoded = jwt.verify(token, 'secret');
-    return true;
-  } catch(err) {
-    return false;
-  }
-}
 
 router.post('/verify-session', function(req, res, next) {
   const tokenOfUser = req.body.token;
