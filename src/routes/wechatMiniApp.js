@@ -13,6 +13,24 @@ const generateTokenByOpenId = (openId) => {
   return jwt.sign({openId: openId}, 'secret', { expiresIn: '30 days'});
 }
 
+const verifyToken = (token) => {
+  try {
+    const decoded = jwt.verify(token, 'secret');
+    return true;
+  } catch(err) {
+    return false;
+  }
+}
+
+router.post('/verify-session', function(req, res, next) {
+  const tokenOfUser = req.body.token;
+  if(verifyToken(tokenOfUser)) {
+    res.send({status: 'ok'});
+  } else {
+    res.status(404).send({status: 'not ok'})
+  }
+});
+
 router.post('/get-session',  function(req, res, next) {
   const userCodeOfMiniApp = req.body.code;
   const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${appId}&secret=${appSecret}&js_code=${userCodeOfMiniApp}&grant_type=authorization_code`
