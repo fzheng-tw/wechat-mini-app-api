@@ -1,2 +1,1 @@
-export const appId = '';
-export const appSecret = '';
+export const databaseURL = 'mongodb://127.0.0.1:27017/wechat';

@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 
+import db from './db/database'
+
 var app = express();
 
 // uncomment after placing your favicon in /public
@@ -15,6 +17,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+db.open();
 
 app.use('/', routes);
 
