@@ -25,13 +25,11 @@ router.post('/get-session',  function(req, res, next) {
 
     const {openid, session_key} = response.data;
 
-    const tmpId= 'oWxc65JUTJvv_hQeyer8jjXtDdLQ';
-
-    User.findOne({openId: tmpId}).then((user) => {
+    User.findOne({openId: openid}).then((user) => {
       if(user) {
         res.send({token: generateTokenByOpenId(user.openId)});
       } else {
-        User.create({ openId: tmpId }).then((user) => {
+        User.create({ openId: openid }).then((user) => {
           res.send({token: generateTokenByOpenId(user.openId)});
         }).catch((error) => {
           console.log('error', error);
